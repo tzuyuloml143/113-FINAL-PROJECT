@@ -1,5 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class ESDE extends JFrame {
 
@@ -10,17 +12,22 @@ public class ESDE extends JFrame {
         setResizable(false);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        // Initialize and set up the panel first
         JPanel panel = new JPanel();
         panel.setBounds(224, 125, 918, 518);
         panel.setLayout(null);
 
-        // Add buttons to the panel
         JButton button = new JButton("Edit Products");
         button.setBounds(168, 20, 581, 72);
         button.setFont(new Font("Times New Roman", Font.PLAIN, 20));
         button.setBackground(Color.RED);
         panel.add(button);
+
+        button.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                Edit editFrame = new Edit();
+                editFrame.setVisible(true);
+            }
+        });
 
         JButton button2 = new JButton("Sell");
         button2.setBounds(168, 145, 581, 72);
@@ -40,10 +47,8 @@ public class ESDE extends JFrame {
         button4.setBackground(Color.RED);
         panel.add(button4);
 
-        // Add the panel to the frame
         add(panel);
 
-        // Set up the background label and add it last to make sure it's on top
         JLabel background = new JLabel();
         background.setIcon(new ImageIcon("C:/Users/patri/Downloads/200w.gif"));
         background.setBounds(0, 0, 1366, 768);
