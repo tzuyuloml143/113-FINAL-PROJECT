@@ -2,15 +2,16 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.HashMap;
 
 public class Login extends JFrame {
 
+    private HashMap<String, String> userData = new HashMap<>();
+
     public Login() {
- 
         setSize(1366, 768);
         setTitle("Login");
         setLayout(null);
-        //getContentPane().setBackground(Color.YELLOW);
         setResizable(false);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -58,21 +59,20 @@ public class Login extends JFrame {
         panel.add(loginButton);
 
         loginButton.addActionListener(new ActionListener() {
-            
             public void actionPerformed(ActionEvent e) {
                 String enteredUsername = usernameField.getText();
                 String enteredPassword = String.valueOf(passwordField.getPassword());
 
-                if (enteredUsername.equals("CompSciMafia") && enteredPassword.equals("Cutie")) {
-                    JOptionPane.showMessageDialog(null, "Login successful!");
+                if (validateCredentials(enteredUsername, enteredPassword)) {
+                    JOptionPane.showMessageDialog(null, "Login Successful!");
+                    ESDE esdeFrame = new ESDE();
+                    esdeFrame.setVisible(true);
                     dispose();
-                    new ESDE().setVisible(true);
                 } else {
-                    JOptionPane.showMessageDialog(null, "Invalid username or password!");
+                    JOptionPane.showMessageDialog(null, "Invalid Username or Password.");
                 }
             }
         });
-
 
         JButton signUpButton = new JButton("Don't have an account?");
         signUpButton.setBounds(225, 390, 244, 53);
@@ -82,9 +82,25 @@ public class Login extends JFrame {
         signUpButton.setBorderPainted(false);
         signUpButton.setContentAreaFilled(false);
         panel.add(signUpButton);
+
+        signUpButton.addActionListener(new ActionListener() {
+         
+            public void actionPerformed(ActionEvent e) {
+                Signup signup = new Signup(Login.this);
+                signup.setVisible(true);
+            }
+        });
     }
 
     public static void main(String[] args) {
         new Login();
+    }
+
+    public void storeData(String username, String password) {
+        userData.put(username, password);
+    }
+
+    private boolean validateCredentials(String username, String password) {
+        return userData.containsKey(username) && userData.get(username).equals(password);
     }
 }
